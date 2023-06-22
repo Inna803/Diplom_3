@@ -5,7 +5,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Condition.visible;
 
 public class MainPage {
 
@@ -76,6 +76,9 @@ public class MainPage {
     @FindBy(how = How.XPATH, using = ".//span[text()='Хрустящие минеральные кольца']")
     private SelenideElement fillingInBasket;
 
+    public MainPage() {
+    }
+
     /**
      * Нажимает кнопку "Войти в аккаунт"
      */
@@ -99,9 +102,10 @@ public class MainPage {
      */
     @Step("Нажать кнопку \"Начинки\" и проверить отображение в корзине")
     public boolean clickFillingButtonAndCheckTheSign() {
-        fillingsButton.click();
-        fillingForDrop.dragAndDropTo(orderBasket);
-        return fillingInBasket.isDisplayed();
+        fillingsButton.click(); // нажимает кнопку "Начинки"
+        fillingsSign.shouldBe(visible); // проверяет отображение заголовка "Начинки"
+        fillingForDrop.dragAndDropTo(orderBasket); // перетаскивает элемент "Начинки" в корзину
+        return fillingInBasket.isDisplayed(); // проверяет отображение начинки в корзине
     }
 
     /**
@@ -111,10 +115,11 @@ public class MainPage {
      */
     @Step("Нажать кнопку \"Соусы\" и проверить отображение в корзине")
     public boolean clickSaucesButtonAndCheckTheSign() {
-        lastIngredient.scrollIntoView(true);
-        saucesButton.click();
-        sauceForDrop.dragAndDropTo(orderBasket);
-        return sauceInBasket.isDisplayed();
+        lastIngredient.scrollIntoView(true); // прокручивает страницу, чтобы элемент lastIngredient был видимым
+        saucesButton.click(); // нажимает кнопку "Соусы"
+        saucesSign.shouldBe(visible); // проверяет отображение заголовка "Соусы"
+        sauceForDrop.dragAndDropTo(orderBasket); // перетаскивает элемент "Соус" в корзину
+        return sauceInBasket.isDisplayed(); // возвращает true, если соус отображается в корзине
     }
 
     /**
@@ -124,10 +129,11 @@ public class MainPage {
      */
     @Step("Нажать кнопку \"Булки\" и проверить отображение в корзине")
     public boolean clickBunsButtonCheckTheSign() {
-        lastIngredient.scrollIntoView(true);
-        bunsButton.click();
-        bunForDrop.dragAndDropTo(orderBasket);
-        return bunInBasket.isDisplayed();
+        lastIngredient.scrollIntoView(true); // прокручивает страницу, чтобы элемент lastIngredient был видимым
+        bunsButton.click(); // нажимает кнопку "Булки"
+        bunsSign.shouldBe(visible); // проверяет отображение заголовка "Булки"
+        bunForDrop.dragAndDropTo(orderBasket); // перетаскивает элемент "Булка" в корзину
+        return bunInBasket.isDisplayed(); // возвращает true, если булка отображается в корзине
     }
 
 }

@@ -1,5 +1,7 @@
 import PageObject.RegisterPage;
+import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.junit4.DisplayName;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,11 +42,17 @@ public class RegistrationOfUserTests {
         TestConfiguration.configureBrowser(browser);
     }
 
-    // тест, проверяющий успешную регистрацию пользователя
+    @After
+    public void tearDown() {
+        WebDriverRunner.clearBrowserCache();
+        WebDriverRunner.closeWebDriver();
+    }
+
+    //тест, проверяющий успешную регистрацию пользователя
     @Test
     @DisplayName("Успешная регистрация")
     public void checkTheCorrectRegistration() {
-        // открываем страницу регистрации
+        // открываем страницу регистрации.
         RegisterPage registerPage = open(REGISTER_PAGE_URL, RegisterPage.class);
 
         // выполняем регистрацию пользователя
