@@ -5,7 +5,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 
 public class MainPage {
 
@@ -76,6 +76,9 @@ public class MainPage {
     @FindBy(how = How.XPATH, using = ".//span[text()='Хрустящие минеральные кольца']")
     private SelenideElement fillingInBasket;
 
+    @FindBy(how = How.XPATH, using = "//div[contains(@class, 'tab_tab_type_current')]/span[contains(@class, 'text_type_main-default')]")
+    private SelenideElement activeElement;
+
     public MainPage() {
     }
 
@@ -100,23 +103,41 @@ public class MainPage {
      *
      * @return true, если начинка отображается в корзине, в противном случае - false
      */
-    @Step("Нажать кнопку \"Начинки\" и проверить отображение в корзине")
-    public boolean clickFillingButtonAndCheckTheSign() {
-        fillingsButton.click(); // нажимает кнопку "Начинки"
+    @Step("Открыть раздел 'Начинки'")
+    public boolean openIngredientSectionFillings() {
+        // нажимаем кнопку "Начинки"
+        fillingsButton.shouldBe(enabled).click();
+        // проверяем, что активный элемент содержит текст "Начинки" и возвращает результат его наличия
+        return getActiveElement().shouldHave(text("Начинки")).exists();
+    }
+
+
+    @Step("Перетащить элемент 'Начинки' и проверить отображение в корзине")
+    public boolean dragTheFillingToTheBasket() {
         fillingsSign.shouldBe(visible); // проверяет отображение заголовка "Начинки"
         fillingForDrop.dragAndDropTo(orderBasket); // перетаскивает элемент "Начинки" в корзину
         return fillingInBasket.isDisplayed(); // проверяет отображение начинки в корзине
     }
+
 
     /**
      * Нажимает кнопку "Соусы" и проверяет отображение в корзине
      *
      * @return true, если соус отображается в корзине, в противном случае - false
      */
-    @Step("Нажать кнопку \"Соусы\" и проверить отображение в корзине")
-    public boolean clickSaucesButtonAndCheckTheSign() {
-        lastIngredient.scrollIntoView(true); // прокручивает страницу, чтобы элемент lastIngredient был видимым
-        saucesButton.click(); // нажимает кнопку "Соусы"
+
+    @Step("Открыть раздел 'Соусы'")
+    public boolean openIngredientSectionSauces() {
+        // прокручивает страницу, чтобы элемент lastIngredient был видимым
+        lastIngredient.scrollIntoView(true);
+        // пажимаем кнопку "Соусы"
+        saucesButton.shouldBe(enabled).click();
+        // проверяем, что активный элемент содержит текст "Соусы" и возвращает результат его наличия
+        return getActiveElement().shouldHave(text("Соусы")).exists();
+    }
+
+    @Step("Перетащить элемент 'Соусы' и проверить отображение в корзине")
+    public boolean dragTheSauceToTheBasket() {
         saucesSign.shouldBe(visible); // проверяет отображение заголовка "Соусы"
         sauceForDrop.dragAndDropTo(orderBasket); // перетаскивает элемент "Соус" в корзину
         return sauceInBasket.isDisplayed(); // возвращает true, если соус отображается в корзине
@@ -127,13 +148,26 @@ public class MainPage {
      *
      * @return true, если булка отображается в корзине, в противном случае - false
      */
-    @Step("Нажать кнопку \"Булки\" и проверить отображение в корзине")
-    public boolean clickBunsButtonCheckTheSign() {
-        lastIngredient.scrollIntoView(true); // прокручивает страницу, чтобы элемент lastIngredient был видимым
-        bunsButton.click(); // нажимает кнопку "Булки"
+
+    @Step("Открыть раздел 'Булки'")
+    public boolean openIngredientSectionBuns() {
+        // прокручивает страницу, чтобы элемент lastIngredient был видимым
+        lastIngredient.scrollIntoView(true);
+        // нажимаем кнопку "Булки"
+        bunsButton.shouldBe(enabled).click();
+        // проверяем, что активный элемент содержит текст "Булки" и возвращает результат его наличия
+        return getActiveElement().shouldHave(text("Булки")).exists();
+    }
+
+    @Step("Перетащить элемент 'Булки' и проверить отображение в корзине")
+    public boolean dragTheBunsToTheBasket() {
         bunsSign.shouldBe(visible); // проверяет отображение заголовка "Булки"
         bunForDrop.dragAndDropTo(orderBasket); // перетаскивает элемент "Булка" в корзину
         return bunInBasket.isDisplayed(); // возвращает true, если булка отображается в корзине
+    }
+
+    public SelenideElement getActiveElement() {
+        return activeElement;
     }
 
 }

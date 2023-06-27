@@ -10,6 +10,11 @@ public class LoginPage {
 
     // url страницы входа
     public static final String LOGIN_PAGE_URL = "https://stellarburgers.nomoreparties.site/login";
+    @FindBy(xpath = ".//h2[contains(text(),'Вход')]")
+    private SelenideElement wordVhod;
+
+    @FindBy(xpath = ".//a[contains(@class,'Auth_link')][contains(text(),'Зарегистрироваться')]")
+    private SelenideElement registrationButton;
 
     // поле ввода почты
     @FindBy(how = How.XPATH, using = ".//input[@name='name']")
@@ -22,6 +27,15 @@ public class LoginPage {
     // кнопка "Войти"
     @FindBy(how = How.XPATH, using = ".//button[text()='Войти']")
     private SelenideElement entryButton;
+
+    public void clickRegButton() {
+        registrationButton.click();
+    }
+
+    public boolean existVhod() {
+        wordVhod.shouldHave(Condition.visible);
+        return wordVhod.exists();
+    }
 
     /**
      * Вводит значение в поле электронной почты

@@ -47,34 +47,38 @@ public class ConstructorTests {
         TestConfiguration.configureBrowser(browser);
     }
 
+
     /**
      * Тест, проверяющий возможность добавления элемента из раздела "Булки" в корзину.
      */
     @Test
-    @DisplayName("Проверяем, что после перехода в раздел \"Булки\" можно добавить элемент из этого раздела в корзину")
+    @DisplayName("Проверяем, что после перехода в раздел 'Булки' можно добавить элемент из этого раздела в корзину")
     public void checkTransitionOfBunsButton() {
         MainPage main = open(MAIN_PAGE_URL, MainPage.class);
-        assertTrue("After drag and drop the bun in the order basket must be visible", main.clickBunsButtonCheckTheSign());
+        assertTrue("The 'Buns' section should be active after clicking the button", main.openIngredientSectionBuns());
+        assertTrue("After drag and drop the bun in the order basket must be visible", main.dragTheBunsToTheBasket());
     }
 
     /**
      * Тест, проверяющий возможность добавления элемента из раздела "Соусы" в корзину.
      */
     @Test
-    @DisplayName("Проверяем, что после перехода в раздел \"Соусы\" можно добавить элемент из этого раздела в корзину")
+    @DisplayName("Проверяем, что после перехода в раздел 'Соусы' можно добавить элемент из этого раздела в корзину")
     public void checkTransitionOfSaucesButton() {
         MainPage main = open(MAIN_PAGE_URL, MainPage.class);
-        assertTrue("After drag and drop the sauce in the order basket must be visible", main.clickSaucesButtonAndCheckTheSign());
+        assertTrue("The 'Sauces' section should be active after clicking the button", main.openIngredientSectionSauces());
+        assertTrue("After drag and drop the sauce in the order basket must be visible", main.dragTheSauceToTheBasket());
     }
 
     /**
      * Тест, проверяющий возможность добавления элемента из раздела "Начинки" в корзину.
      */
     @Test
-    @DisplayName("Проверяем, что после перехода в раздел \"Начинки\" можно добавить элемент из этого раздела в корзину")
+    @DisplayName("Проверяем, что после перехода в раздел 'Начинки' можно добавить элемент из этого раздела в корзину")
     public void checkTransitionOfFillingButton() {
         MainPage main = open(MAIN_PAGE_URL, MainPage.class);
-        assertTrue("After drag and drop the filling in the order basket must be visible", main.clickFillingButtonAndCheckTheSign());
+        assertTrue("The 'Fillings' section should be active after clicking the button", main.openIngredientSectionFillings());
+        assertTrue("After drag and drop the filling in the order basket must be visible", main.dragTheFillingToTheBasket());
     }
 
 }

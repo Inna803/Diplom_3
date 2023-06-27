@@ -25,9 +25,11 @@ public class RegisterPage {
     @FindBy(how = How.XPATH, using = "//*[@href='/login']")
     private SelenideElement entryButton;
 
-    // кадпись "Некорректный пароль"
+    // надпись "Некорректный пароль"
     @FindBy(how = How.XPATH, using = ".//p[text()='Некорректный пароль']")
     private SelenideElement incorrectPasswordSign;
+    @FindBy(xpath = ".//p[contains(@class,'input__error')]")
+    private SelenideElement errorText;
 
     /**
      * Ввод имени
@@ -96,6 +98,12 @@ public class RegisterPage {
     public void clickTheEntryButton() {
         entryButton.scrollTo().click();
     }
+
+    public boolean errorExist() {
+        errorText.shouldHave(Condition.visible);
+        return errorText.exists();
+    }
+
 
     // переменные для регистрации пользователя
     public final String NAME = "test" + RandomStringUtils.randomAlphabetic(3);
