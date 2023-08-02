@@ -1,4 +1,4 @@
-#  autotests API
+#   Веб-приложение
 
 ### About
 
